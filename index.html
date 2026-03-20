@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-  <!-- FAVICON — Lightning Bolt ⚡ -->
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAICAAAAEAIACHAwAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAAAAZiS0dEAP8A/wD/oL2nkwAAAzxJREFUWIW91k1sG0UUwPH/m3G8NrbVpKh2PhCotEhUkFBUIjhCw4kD4Yo4IJA49QQXTgiBQFAhARI3OKCKG1w5Aqq49FBoEChBIAEiJXWcBlc0m/hz53FYk/rbuzbqSCtLM+v5vfnYNyMclkImm9fzGHla0FlEpgBQhpdh7Z1tNZSriH68t7Pz3n+VApCdmzsl6r5BmI3ceTy8q00u713XJ6C0b6CQua14WJZzx/gKwGbzmQ/EyNmJ8aTBnZhGdqsj/iutv8tdyXR212BYnRgHqi+fhpu1iHirCOeMQGFSvPn4AsFyAVM8iI6HAdxrJt3tmk9TffUM9spOPDwsnpkExxoqbzyK5hLYtetxcVAwk+z22ksPECweBVXsld3YOIAZFw8ePkb92ROgiinuY7a71j8CPjyAIbhOe1RefyRMY+p6Rx8RHxzAsGURofraGfSoF76oiv2hbf1j4P0DGJHh6s/dR3M5D6qHj13bHQvvDWAEHtw/Q+3FUyHcGr0pHmC2K2PhAImouOaSVN9cBktHAPanv3HzWdxCGreQCX/n0+idHqm3fsRsDklOhwFEOFhqryzhZtO3pr4VQGNlnsbZuY46VPE+3BiJj84DrbbG6nEaKws9eMfTVpf4tsTUl9dG4rdmYMgL7u4s9WfuIXGphNnykb98zNY+5mqF2vMnaa7M9uwJ7/2fI+GDA2hPFJs+mRcudrWHG849eKRzBpoO7511xG9GwiHuZ9iOF9K4fKpj9MlPf8Nu/BMZh+4ZiIgDBKdnOkZv18okv9iMhUP7DMTAAdzS9CEuN2qk3t0AN+jMHtzt6M+wDw4QLM2AOnBK6vw6Uh5wGxrRd4TjuBd3hRQu74Xr/vmf2O9vjIWHeSAmDhA8FK6/+eUmyc/+GBuHocfx4NzuFo8gfoPU2+vQ6PNWjEuOAepxcBSCxWm8j37FlPpcwePcsJS6Qfk9Du4KKex3ZRIX+1xCY17vVNi2yXQOMTwVBQfQ+TRTX5cg6O4tHg4g6AUByOXzl1Dz2Djn+fjtWvTL9qQB2NuRJ1Eu304cMStw7cCGFfuN+oH/ydQdWV/Q44hkgcT/iqs2VGRL0At+2a7WK8UiwL8jV7suRb48fgAAAABJRU5ErkJggg==">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIj4KICA8cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHJ4PSI2IiBmaWxsPSIjMGMxMTE4Ii8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0idXJsKCNiZykiIG9wYWNpdHk9IjAuNiIvPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMGQxZjE1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBjMTExOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYm9sdCIgeDE9IjAiIHkxPSIwIiB4Mj0iMC41IiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMGU2NzYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDBjODUzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cG9seWdvbiBwb2ludHM9IjE5LjUsMyA4LjUsMTggMTUuNSwxNyAxMi41LDI5IDIzLjUsMTQgMTYuNSwxNSIgZmlsbD0idXJsKCNib2x0KSIvPgo8L3N2Zz4K">
-  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADPElEQVRYhb3WTWwbRRTA8f+bcbw2ttWkqHY+EKi0SFSQUFQiOELDiQPhijggkDj1BBdOCIFAUCEBEjc4oIobXDkCqrj0UGgQKEEgASIldZwGVzSb+HPncViT+tu7NupIK0sz6/m9+dg3IxyWQiab1/MYeVrQWUSmAFCGl2HtnW01lKuIfry3s/Pef5UCkJ2bOyXqvkGYjdx5PLyrTS7vXdcnoLRvoJC5rXhYlnPH+ArAZvOZD8TI2YnxpMGdmEZ2qyP+K62/y13JdHbXYFidGAeqL5+Gm7WIeKsI54xAYVK8+fgCwXIBUzyIjocB3Gsm3e2aT1N99Qz2yk48PCyemQTHGipvPIrmEti163FxUDCT7PbaSw8QLB4FVeyV3dg4gBkXDx4+Rv3ZE6CKKe5jtrvWPwI+PIAhuE57VF5/JExj6npHHxEfHMCwZRGh+toZ9KgXvqiK/aFt/WPg/QMYkeHqz91HczkPqoePXdsdC+8NYAQe3D9D7cVTIdwavSkeYLYrY+EAiai45pJU31wGS0cA9qe/cfNZ3EIat5AJf+fT6J0eqbd+xGwOSU6HAUQ4WGqvLOFm07emvhVAY2Wextm5jjpU8T7cGImPzgOttsbqcRorCz14x9NWl/i2xNSX10bit2ZgyAvu7iz1Z+4hcamE2fKRv3zM1j7maoXa8ydprsz27Anv/Z8j4YMDaE8Umz6ZFy52tYcbzj14pHMGmg7vnXXEb0bCIe5n2I4X0rh8qmP0yU9/w278ExmH7hmIiAMEp2c6Rm/XyiS/2IyFQ/sMxMAB3NL0IS43aqTe3QA36Mwe3O3oz7APDhAszYA6cErq/DpSHnAbGtF3hOO4F3eFFC7vhev++Z/Y72+MhYd5ICYOEDwUrr/55SbJz/4YG4ehx/Hg3O4WjyB+g9Tb69Do81aMS44B6nFwFILFabyPfsWU+lzB49ywlLpB+T0O7gop7HdlEhf7XEJjXu9U2LbJdA4xPBUFB9D5NFNflyDo7i0eDiDoBQHI5fOXUPPYOOf5+O1a9Mv2pAHY25EnUS7fThwxK3DtwIYV+436gf/J1B1ZX9DjiGSBxP+KqzZUZEvQC37ZrtYrxSLAvyNXuy5Fvjx+AAAAAElFTkSuQmCC">
-  <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADPElEQVRYhb3WTWwbRRTA8f+bcbw2ttWkqHY+EKi0SFSQUFQiOELDiQPhijggkDj1BBdOCIFAUCEBEjc4oIobXDkCqrj0UGgQKEEgASIldZwGVzSb+HPncViT+tu7NupIK0sz6/m9+dg3IxyWQiab1/MYeVrQWUSmAFCGl2HtnW01lKuIfry3s/Pef5UCkJ2bOyXqvkGYjdx5PLyrTS7vXdcnoLRvoJC5rXhYlnPH+ArAZvOZD8TI2YnxpMGdmEZ2qyP+K62/y13JdHbXYFidGAeqL5+Gm7WIeKsI54xAYVK8+fgCwXIBUzyIjocB3Gsm3e2aT1N99Qz2yk48PCyemQTHGipvPIrmEti163FxUDCT7PbaSw8QLB4FVeyV3dg4gBkXDx4+Rv3ZE6CKKe5jtrvWPwI+PIAhuE57VF5/JExj6npHHxEfHMCwZRGh+toZ9KgXvqiK/aFt/WPg/QMYkeHqz91HczkPqoePXdsdC+8NYAQe3D9D7cVTIdwavSkeYLYrY+EAiai45pJU31wGS0cA9qe/cfNZ3EIat5AJf+fT6J0eqbd+xGwOSU6HAUQ4WGqvLOFm07emvhVAY2Wextm5jjpU8T7cGImPzgOttsbqcRorCz14x9NWl/i2xNSX10bit2ZgyAvu7iz1Z+4hcamE2fKRv3zM1j7maoXa8ydprsz27Anv/Z8j4YMDaE8Umz6ZFy52tYcbzj14pHMGmg7vnXXEb0bCIe5n2I4X0rh8qmP0yU9/w278ExmH7hmIiAMEp2c6Rm/XyiS/2IyFQ/sMxMAB3NL0IS43aqTe3QA36Mwe3O3oz7APDhAszYA6cErq/DpSHnAbGtF3hOO4F3eFFC7vhev++Z/Y72+MhYd5ICYOEDwUrr/55SbJz/4YG4ehx/Hg3O4WjyB+g9Tb69Do81aMS44B6nFwFILFabyPfsWU+lzB49ywlLpB+T0O7gop7HdlEhf7XEJjXu9U2LbJdA4xPBUFB9D5NFNflyDo7i0eDiDoBQHI5fOXUPPYOOf5+O1a9Mv2pAHY25EnUS7fThwxK3DtwIYV+436gf/J1B1ZX9DjiGSBxP+KqzZUZEvQC37ZrtYrxSLAvyNXuy5Fvjx+AAAAAElFTkSuQmCC">
-  <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAICAAAAEAIACHAwAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAAAAZiS0dEAP8A/wD/oL2nkwAAAzxJREFUWIW91k1sG0UUwPH/m3G8NrbVpKh2PhCotEhUkFBUIjhCw4kD4Yo4IJA49QQXTgiBQFAhARI3OKCKG1w5Aqq49FBoEChBIAEiJXWcBlc0m/hz53FYk/rbuzbqSCtLM+v5vfnYNyMclkImm9fzGHla0FlEpgBQhpdh7Z1tNZSriH68t7Pz3n+VApCdmzsl6r5BmI3ceTy8q00u713XJ6C0b6CQua14WJZzx/gKwGbzmQ/EyNmJ8aTBnZhGdqsj/iutv8tdyXR212BYnRgHqi+fhpu1iHirCOeMQGFSvPn4AsFyAVM8iI6HAdxrJt3tmk9TffUM9spOPDwsnpkExxoqbzyK5hLYtetxcVAwk+z22ksPECweBVXsld3YOIAZFw8ePkb92ROgiinuY7a71j8CPjyAIbhOe1RefyRMY+p6Rx8RHxzAsGURofraGfSoF76oiv2hbf1j4P0DGJHh6s/dR3M5D6qHj13bHQvvDWAEHtw/Q+3FUyHcGr0pHmC2K2PhAImouOaSVN9cBktHAPanv3HzWdxCGreQCX/n0+idHqm3fsRsDklOhwFEOFhqryzhZtO3pr4VQGNlnsbZuY46VPE+3BiJj84DrbbG6nEaKws9eMfTVpf4tsTUl9dG4rdmYMgL7u4s9WfuIXGphNnykb98zNY+5mqF2vMnaa7M9uwJ7/2fI+GDA2hPFJs+mRcudrWHG849eKRzBpoO7511xG9GwiHuZ9iOF9K4fKpj9MlPf8Nu/BMZh+4ZiIgDBKdnOkZv18okv9iMhUP7DMTAAdzS9CEuN2qk3t0AN+jMHtzt6M+wDw4QLM2AOnBK6vw6Uh5wGxrRd4TjuBd3hRQu74Xr/vmf2O9vjIWHeSAmDhA8FK6/+eUmyc/+GBuHocfx4NzuFo8gfoPU2+vQ6PNWjEuOAepxcBSCxWm8j37FlPpcwePcsJS6Qfk9Du4KKex3ZRIX+1xCY17vVNi2yXQOMTwVBQfQ+TRTX5cg6O4tHg4g6AUByOXzl1Dz2Djn+fjtWvTL9qQB2NuRJ1Eu304cMStw7cCGFfuN+oH/ydQdWV/Q44hkgcT/iqs2VGRL0At+2a7WK8UiwL8jV7suRb48fgAAAABJRU5ErkJggg==">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Shayan · Life OS</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHAYAN — Life OS</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Shayan OS">
+  <meta name="theme-color" content="#070a0d">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230c1118'/%3E%3Cpolygon points='19.5,3 8.5,18 15.5,17 12.5,29 23.5,14 16.5,15' fill='%2300e676'/%3E%3C/svg%3E">
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230c1118'/%3E%3Cpolygon points='19.5,3 8.5,18 15.5,17 12.5,29 23.5,14 16.5,15' fill='%2300e676'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg0:#070a0d;--bg1:#0c1118;--bg2:#111a24;--bg3:#172030;--bg4:#1d2a3a;--bg5:#243344;
@@ -24,7 +24,7 @@
   --t:#64ffda;--t2:rgba(100,255,218,0.07);--t3:rgba(100,255,218,0.13);
   --pink:#ff80ab;--pink2:rgba(255,128,171,0.07);
   --orange:#ff9100;--orange2:rgba(255,145,0,0.07);
-  --rad:8px;--rad2:6px;--sb:190px;
+  --rad:8px;--rad2:6px;--sb:188px;
   --fh:'Poppins',sans-serif;--fb:'Inter',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -35,13 +35,13 @@ html,body{height:100%;background:var(--bg0);color:var(--text);font-family:var(--
 
 /* SIDEBAR */
 .sidebar{width:var(--sb);min-width:var(--sb);background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh;overflow-y:auto;}
-.sb-brand{padding:14px 14px 12px;border-bottom:1px solid var(--border);}
+.sb-brand{padding:12px 14px 10px;border-bottom:1px solid var(--border);}
 .sb-logo{font-family:var(--fh);font-weight:900;font-size:14px;color:var(--g);letter-spacing:.1em;}
 .sb-sub{font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--fb);}
-.sb-year-sel{margin:8px 14px 0;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rad2);padding:6px 10px;color:var(--text);font-size:12px;font-family:var(--fb);width:calc(100% - 28px);outline:none;cursor:pointer;}
+.sb-year-sel{margin:6px 14px 0;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rad2);padding:6px 10px;color:var(--text);font-size:12px;font-family:var(--fb);width:calc(100% - 28px);outline:none;cursor:pointer;}
 .sb-year-sel:focus{border-color:var(--g);}
 .sb-nav{padding:6px 0;flex:1;}
-.sb-sec{padding:9px 14px 3px;font-size:9px;font-weight:700;color:var(--text4);letter-spacing:.14em;text-transform:uppercase;font-family:var(--fh);}
+.sb-sec{padding:8px 14px 3px;font-size:9px;font-weight:700;color:var(--text4);letter-spacing:.14em;text-transform:uppercase;font-family:var(--fh);}
 .sb-item{display:flex;align-items:center;gap:7px;padding:5px 14px;cursor:pointer;color:var(--text3);font-size:11px;font-weight:500;border-left:2px solid transparent;transition:all .12s;font-family:var(--fb);}
 .sb-item:hover{color:var(--text2);background:rgba(255,255,255,.02);}
 .sb-item.active{color:var(--text);border-left-color:var(--g);background:rgba(0,230,118,.04);}
@@ -311,60 +311,94 @@ html,body{height:100%;background:var(--bg0);color:var(--text);font-family:var(--
 .dl-hab-dot{width:8px;height:8px;border-radius:50%;}
 .dl-mood{font-size:10px;color:var(--text3);font-family:var(--fb);}
 
-.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:400;width:38px;height:38px;border-radius:var(--rad2);background:var(--bg2);border:1px solid var(--border2);align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:4px;-webkit-tap-highlight-color:transparent;}
+/* ======================================================
+   MOBILE + LAYOUT FIXES
+   ====================================================== */
+.hamburger{display:none;position:fixed;top:10px;left:10px;z-index:500;width:38px;height:38px;border-radius:var(--rad2);background:var(--bg2);border:1px solid var(--border2);align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:4px;}
 .hamburger span{width:16px;height:2px;background:var(--text);border-radius:1px;display:block;transition:all .2s;}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:300;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:400;}
 .sidebar-overlay.open{display:block;}
-.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg1);border-top:1px solid var(--border2);z-index:400;padding-bottom:env(safe-area-inset-bottom);}
-.mobile-nav-inner{display:flex;align-items:center;justify-content:space-around;padding:6px 0 8px;}
-.mnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 12px;cursor:pointer;color:var(--text3);border-radius:var(--rad2);transition:all .12s;-webkit-tap-highlight-color:transparent;min-width:52px;}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg1);border-top:1px solid var(--border2);z-index:500;padding-bottom:env(safe-area-inset-bottom,0px);}
+.mobile-nav-inner{display:flex;align-items:center;justify-content:space-around;padding:7px 4px 9px;}
+.mnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 10px;cursor:pointer;color:var(--text3);border-radius:var(--rad2);transition:color .12s;min-width:50px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 .mnav-item.active{color:var(--g);}
-.mnav-icon{font-size:19px;line-height:1;}
+.mnav-icon{font-size:20px;line-height:1;}
 .mnav-lbl{font-size:9px;font-weight:600;font-family:var(--fh);}
-.btn,.ichk,.hcell,.juz-box,.chain-dot,.iman-btn,.score-btn,.sb-item,.mnav-item,button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+/* touch targets */
+button,.btn,.ichk,.hcell,.juz-box,.chain-dot,.iman-btn,.score-btn,.sb-item,.mnav-item{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .main,.sidebar,.modal{-webkit-overflow-scrolling:touch;}
+
 @media(max-width:768px){
   .hamburger{display:flex;}
   .mobile-nav{display:block;}
-  .shell{display:block;height:auto;overflow:visible;}
-  html,body{height:auto !important;overflow-y:auto !important;}
-  .main{margin-left:0 !important;width:100%;min-height:100vh;overflow-y:auto !important;overflow-x:hidden;padding-bottom:90px;height:auto !important;}
-  .page{padding:58px 13px 20px !important;min-height:100vh;}
-  .sidebar{position:fixed !important;left:-200px;top:0;bottom:0;width:200px !important;min-width:200px !important;height:100% !important;z-index:350;transition:left .22s ease;overflow-y:auto;}
-  .sidebar.open{left:0 !important;}
-  .g2,.g3,.g5{grid-template-columns:1fr !important;}
-  .g4{grid-template-columns:1fr 1fr !important;}
-  #dash-stats-grid{grid-template-columns:1fr 1fr 1fr !important;}
-  .pg-title{font-size:17px;}
-  .banner-big{font-size:32px;}
-  .banner{padding:13px 14px;gap:10px;flex-wrap:wrap;}
-  .topbar{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:14px;padding-bottom:12px;}
+  /* CRITICAL SCROLL FIX */
+  html{height:100%;overflow-y:auto;}
+  body{height:100%;overflow-y:auto;}
+  .shell{display:block;height:auto;min-height:100%;overflow:visible;}
+  .main{
+    margin-left:0!important;
+    width:100%;
+    height:auto;
+    overflow-y:visible!important;
+    overflow-x:hidden;
+    padding-bottom:80px;
+  }
+  .page{padding:56px 13px 24px!important;min-height:auto!important;display:none;}
+  .page.active{display:block;}
+  /* sidebar drawer */
+  .sidebar{position:fixed!important;left:-200px!important;top:0;height:100%!important;width:200px!important;min-width:200px!important;z-index:450;transition:left .22s ease;overflow-y:auto;}
+  .sidebar.open{left:0!important;}
+  /* grids */
+  .g2,.g3,.g5{grid-template-columns:1fr!important;}
+  .g4{grid-template-columns:1fr 1fr!important;}
+  #dash-stats-grid{grid-template-columns:1fr 1fr 1fr!important;}
+  /* typography */
+  .pg-title{font-size:18px;}
+  .banner-big{font-size:34px;}
+  .banner{padding:13px 14px;gap:12px;flex-wrap:wrap;}
+  .banner-info h2{font-size:14px;}
+  /* topbar */
+  .topbar{flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:16px;padding-bottom:12px;}
   .topbar-right{width:100%;display:flex;flex-wrap:wrap;gap:6px;}
   .topbar-right .btn{flex:1;justify-content:center;min-width:70px;}
+  /* cards */
   .card,.card2{padding:12px 13px;}
-  .f-input,.f-select,.f-textarea{font-size:15px;padding:10px 11px;}
-  .btn{padding:8px 13px;font-size:12px;}
-  .btn-sm{padding:6px 10px;font-size:11px;}
-  .modal-bg{align-items:flex-end !important;}
-  .modal{width:100% !important;max-width:100% !important;border-radius:12px 12px 0 0 !important;max-height:88vh;padding:18px 15px;}
-  .hcell{width:30px;height:30px;}
-  .chain-dot{width:10px;height:10px;border-radius:2px;}
-  #quranTracker{display:grid !important;grid-template-columns:repeat(6,1fr) !important;gap:4px;}
-  .juz-box{width:100% !important;aspect-ratio:1;}
-  .item-row{padding:9px 0;}
-  #memories-grid{columns:1 !important;}
-  .score-btn{width:28px;height:28px;font-size:11px;}
-  .iman-btn{width:32px;height:32px;font-size:11px;}
+  /* forms - bigger on mobile */
+  .f-input,.f-select,.f-textarea{font-size:16px!important;padding:10px 12px;}
+  /* buttons */
+  .btn{padding:9px 14px;font-size:13px;}
+  .btn-sm{padding:7px 11px;font-size:12px;}
+  /* modal slides from bottom */
+  .modal-bg{align-items:flex-end!important;}
+  .modal{width:100%!important;max-width:100%!important;border-radius:14px 14px 0 0!important;max-height:90vh;padding:20px 15px;}
+  /* habit cells */
+  .hcell{width:32px;height:32px;}
+  .chain-dot{width:11px;height:11px;border-radius:2px;}
+  /* quran tracker */
+  #quranTracker{display:grid!important;grid-template-columns:repeat(6,1fr)!important;gap:5px;}
+  .juz-box{width:100%!important;aspect-ratio:1;}
+  /* item rows */
+  .item-row{padding:10px 0;}
+  .itxt{font-size:13px;}
+  .ibtn{width:26px;height:26px;}
+  /* memories */
+  #memories-grid{columns:1!important;}
+  /* score/iman btns */
+  .score-btn{width:30px;height:30px;font-size:12px;}
+  .iman-btn{width:34px;height:34px;font-size:12px;}
+  /* sync status above bottom nav */
+  #sync-status{bottom:68px;}
 }
 @media(max-width:380px){
-  #dash-stats-grid{grid-template-columns:1fr 1fr !important;}
+  #dash-stats-grid{grid-template-columns:1fr 1fr!important;}
 }
 @media(min-width:769px){
-  .hamburger{display:none !important;}
-  .mobile-nav{display:none !important;}
-  .sidebar{position:fixed !important;left:0 !important;width:var(--sb) !important;height:100vh !important;}
-  .main{margin-left:var(--sb) !important;}
+  .hamburger{display:none!important;}
+  .mobile-nav{display:none!important;}
+  #sync-status{bottom:16px;}
+  .sidebar{position:fixed!important;left:0!important;height:100vh!important;width:var(--sb)!important;}
   .shell{display:flex;height:100vh;overflow:hidden;}
+  .main{height:100vh;overflow-y:auto;}
 }
 
 </style>
@@ -376,7 +410,7 @@ html,body{height:100%;background:var(--bg0);color:var(--text);font-family:var(--
 <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Menu">
   <span></span><span></span><span></span>
 </button>
-<nav class="mobile-nav">
+<nav class="mobile-nav" id="mobileNav">
   <div class="mobile-nav-inner">
     <div class="mnav-item active" id="mn-dashboard" onclick="mobileNav('dashboard','mn-dashboard')">
       <div class="mnav-icon">⚡</div><div class="mnav-lbl">Home</div>
@@ -390,11 +424,13 @@ html,body{height:100%;background:var(--bg0);color:var(--text);font-family:var(--
     <div class="mnav-item" id="mn-journal" onclick="mobileNav('journal','mn-journal')">
       <div class="mnav-icon">🌙</div><div class="mnav-lbl">Journal</div>
     </div>
-    <div class="mnav-item" id="mn-menu" onclick="toggleSidebar()">
+    <div class="mnav-item" id="mn-more" onclick="toggleSidebar()">
       <div class="mnav-icon">☰</div><div class="mnav-lbl">More</div>
     </div>
   </div>
 </nav>
+<!-- Cloud sync status -->
+<div id="sync-status" style="position:fixed;bottom:70px;right:12px;z-index:500;font-size:10px;font-family:Inter,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);color:var(--text3);display:none;transition:opacity .3s;">⚡ Syncing...</div>
 
 <div class="shell">
 
@@ -404,7 +440,13 @@ html,body{height:100%;background:var(--bg0);color:var(--text);font-family:var(--
     <div class="sb-logo">⚡ SHAYAN · LIFE OS</div>
     <div class="sb-sub">Born 2008 · Engineering · Lahore</div>
   </div>
-  <select class="sb-year-sel" id="yearSelect" onchange="switchYear(this.value)"></select>
+  <div style="padding:0 14px;margin:6px 0 0;">
+  <div style="display:flex;gap:4px;align-items:center;">
+    <select class="sb-year-sel" id="yearSelect" onchange="switchYear(this.value)" style="flex:1;margin:0;"></select>
+    <button onclick="editCurrentYear()" style="width:26px;height:26px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-size:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;" title="Edit year">✎</button>
+    <button onclick="deleteCurrentYear()" style="width:26px;height:26px;border-radius:4px;border:1px solid rgba(255,82,82,.2);background:transparent;color:var(--r);cursor:pointer;font-size:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;" title="Delete year">✕</button>
+  </div>
+</div>
   <nav class="sb-nav">
     <div class="sb-sec">Command</div>
     <div class="sb-item active" onclick="nav('dashboard',this)"><div class="sb-dot"></div>Dashboard</div>
@@ -1111,7 +1153,14 @@ function loadData() {
 }
 
 function saveData() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); } catch(e) { showToast('Storage full — export backup now!'); }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+    // Also save to Firebase cloud (debounced 1.5s)
+    clearTimeout(window._cloudSaveTimer);
+    window._cloudSaveTimer = setTimeout(() => {
+      if (window.saveToCloud) window.saveToCloud();
+    }, 1500);
+  } catch(e) { showToast('Storage full — export backup now!'); }
 }
 
 function YD(year) { return S['y'+(year||currentYear)] || (S['y'+(year||currentYear)] = defaultYearData(year||currentYear)); }
@@ -1953,7 +2002,10 @@ function openModal(type){openModalWith(type,{});}
 
 function openModalWith(type,data){
   const configs = {
-    'add-year':{title:'Add New Year',fields:[{id:'ny-year',label:'Year (e.g. 2027)',type:'text',val:''},{id:'ny-title',label:'Year theme/title',type:'text',val:''}],save:()=>{const y=parseInt(v('ny-year'));if(!y||y<2020||y>2099)return;if(!S.years.includes(y)){S.years.push(y);S['y'+y]=defaultYearData(y);S['y'+y].title=v('ny-title')||'Year of Growth';}saveData();renderYearSelect();showToast('Year '+y+' added ✓');}},
+    'edit-year':{title:'Edit Year',fields:[
+    {id:'ey-title',label:'Year theme / title',type:'text',val:data.title||''},
+  ],save:()=>{const yd=YD(data.id);if(yd){yd.title=v('ey-title');}saveData();renderYearSelect();renderDashboard();showToast('Year updated ✓');}},
+  'add-year':{title:'Add New Year',fields:[{id:'ny-year',label:'Year (e.g. 2027)',type:'text',val:''},{id:'ny-title',label:'Year theme/title',type:'text',val:''}],save:()=>{const y=parseInt(v('ny-year'));if(!y||y<2020||y>2099)return;if(!S.years.includes(y)){S.years.push(y);S['y'+y]=defaultYearData(y);S['y'+y].title=v('ny-title')||'Year of Growth';}saveData();renderYearSelect();showToast('Year '+y+' added ✓');}},
     'add-habit':{title:'Add Habit',fields:[{id:'h-name',label:'Habit name',type:'text',val:''},{id:'h-color',label:'Color',type:'select',options:['green','blue','amber','purple','teal'],val:'green'}],save:()=>{if(!S.habits)S.habits=[];S.habits.push({id:uid(),name:v('h-name'),color:v('h-color')});saveData();renderHabits();}},
     'add-nonneg':{title:'Add Daily Non-Negotiable',fields:[{id:'nn-text',label:'Item',type:'text',val:''},{id:'nn-tag',label:'Tag',type:'text',val:'Deen'},{id:'nn-tc',label:'Color',type:'select',options:['green','blue','amber','purple','teal'],val:'green'}],save:()=>{if(!S.nonneg)S.nonneg=[];S.nonneg.push({id:uid(),text:v('nn-text'),tag:v('nn-tag'),tc:v('nn-tc')});saveData();renderDashboard();}},
     'add-journal-q':{title:'Add Journal Question',fields:[{id:'jq-q',label:'Question',type:'text',val:''}],save:()=>{if(!S.journalQuestions)S.journalQuestions=[];S.journalQuestions.push({id:uid(),text:v('jq-q')});saveData();renderJournalQuestions();}},
@@ -2013,6 +2065,25 @@ function closeModal(){document.getElementById('modalBg').classList.remove('open'
 // ============================================================
 // INIT
 // ============================================================
+
+function editCurrentYear() {
+  const yd = YD();
+  openModalWith('edit-year', {id: currentYear, title: yd.title || String(currentYear)});
+}
+
+function deleteCurrentYear() {
+  if (S.years.length <= 1) { showToast("Can't delete the only year!"); return; }
+  if (!confirm('Delete ' + currentYear + ' and ALL its data? This cannot be undone.')) return;
+  S.years = S.years.filter(y => y !== currentYear);
+  delete S['y' + currentYear];
+  currentYear = Math.max(...S.years);
+  saveData();
+  renderYearSelect();
+  renderPage('dashboard');
+  updateSidebar();
+  showToast('Year deleted');
+}
+
 function init(){
   loadData();
   // ensure current year exists
@@ -2028,5 +2099,179 @@ function init(){
 }
 
 init();
+
+// ======================================================
+// MOBILE NAVIGATION SYSTEM
+// ======================================================
+function toggleSidebar(){
+  const sb=document.getElementById('sidebarEl');
+  const ov=document.getElementById('sidebarOverlay');
+  if(!sb)return;
+  const open=sb.classList.contains('open');
+  sb.classList.toggle('open',!open);
+  ov.classList.toggle('open',!open);
+}
+function closeSidebar(){
+  const sb=document.getElementById('sidebarEl');
+  const ov=document.getElementById('sidebarOverlay');
+  if(sb)sb.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+function mobileNav(pageId,mnId){
+  document.querySelectorAll('.mnav-item').forEach(x=>x.classList.remove('active'));
+  const mn=document.getElementById(mnId);if(mn)mn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  const page=document.getElementById('p-'+pageId);
+  if(page)page.classList.add('active');
+  renderPage(pageId);
+  closeSidebar();
+  window.scrollTo({top:0,behavior:'instant'});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+}
+function currentActivePage(){
+  const a=document.querySelector('.page.active');
+  return a?a.id.replace('p-',''):'dashboard';
+}
+// Override nav to handle mobile + scroll to top
+const _navBase=window.nav;
+window.nav=function(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  const page=document.getElementById('p-'+id);
+  if(page)page.classList.add('active');
+  if(el)el.classList.add('active');
+  renderPage(id);
+  closeSidebar();
+  window.scrollTo({top:0,behavior:'instant'});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+  // sync bottom nav
+  const map={dashboard:'mn-dashboard',dailylog:'mn-dailylog',habits:'mn-habits',journal:'mn-journal'};
+  document.querySelectorAll('.mnav-item').forEach(x=>x.classList.remove('active'));
+  if(map[id]){const mn=document.getElementById(map[id]);if(mn)mn.classList.add('active');}
+};
+// Set initial bottom nav active
+setTimeout(()=>{
+  const mn=document.getElementById('mn-dashboard');
+  if(mn)mn.classList.add('active');
+},100);
+
 </script>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, setDoc, getDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBA8j2uPBXF_RRLNaDZ3NZKZjeh6U06lWs",
+  authDomain: "shayan-life-os.firebaseapp.com",
+  projectId: "shayan-life-os",
+  storageBucket: "shayan-life-os.firebasestorage.app",
+  messagingSenderId: "147340773024",
+  appId: "1:147340773024:web:09c720793ddb726cf5abc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let fbUserId = null;
+let saveTimeout = null;
+let isOnline = navigator.onLine;
+
+// Fixed user ID for Shayan - single user system
+const SHAYAN_DOC_ID = 'shayan_main';
+
+function showSyncStatus(msg, color) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color || 'var(--text2)';
+  el.style.display = 'block';
+  el.style.opacity = '1';
+  clearTimeout(window._syncHideTimer);
+  window._syncHideTimer = setTimeout(() => {
+    el.style.opacity = '0';
+    setTimeout(() => { el.style.display = 'none'; }, 300);
+  }, 3000);
+}
+
+// Sign in anonymously (silent, no password needed)
+signInAnonymously(auth).then(userCred => {
+  fbUserId = userCred.user.uid;
+  window._fbReady = true;
+  console.log('Firebase ready');
+  // Load cloud data on startup
+  loadFromCloud();
+}).catch(err => {
+  console.warn('Firebase auth failed, using localStorage only:', err);
+  window._fbReady = false;
+});
+
+async function loadFromCloud() {
+  try {
+    const docRef = doc(db, 'lifeOS', SHAYAN_DOC_ID);
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      const cloudData = snap.data();
+      const cloudTime = cloudData._savedAt || 0;
+      const localData = JSON.parse(localStorage.getItem('shayan_life_os_v2') || '{}');
+      const localTime = localData._savedAt || 0;
+      // Use whichever is newer
+      if (cloudTime >= localTime) {
+        // Cloud is newer or same
+        delete cloudData._savedAt;
+        window.S = { ...window.S, ...cloudData };
+        localStorage.setItem('shayan_life_os_v2', JSON.stringify(cloudData));
+        if (typeof renderPage === 'function') renderPage(currentActivePage());
+        if (typeof renderDashboard === 'function') renderDashboard();
+        showSyncStatus('✓ Loaded from cloud', 'var(--g)');
+      } else {
+        // Local is newer, push to cloud
+        saveToCloud();
+        showSyncStatus('✓ Local data is current', 'var(--g)');
+      }
+    } else {
+      // No cloud data yet, push local
+      saveToCloud();
+    }
+  } catch (err) {
+    console.warn('Cloud load failed:', err);
+    showSyncStatus('⚠ Offline mode', 'var(--a)');
+  }
+}
+
+async function saveToCloud() {
+  if (!window._fbReady) return;
+  try {
+    const dataToSave = { ...window.S, _savedAt: Date.now() };
+    const docRef = doc(db, 'lifeOS', SHAYAN_DOC_ID);
+    await setDoc(docRef, dataToSave);
+    showSyncStatus('✓ Saved to cloud', 'var(--g)');
+  } catch (err) {
+    console.warn('Cloud save failed:', err);
+    showSyncStatus('⚠ Saved locally only', 'var(--a)');
+  }
+}
+
+// Expose to global so saveData() can call it
+window.saveToCloud = saveToCloud;
+window.loadFromCloud = loadFromCloud;
+
+// Network status
+window.addEventListener('online', () => {
+  isOnline = true;
+  saveToCloud();
+  showSyncStatus('✓ Back online — synced', 'var(--g)');
+});
+window.addEventListener('offline', () => {
+  isOnline = false;
+  showSyncStatus('⚠ Offline — saving locally', 'var(--a)');
+});
+
+</script>
+
 </body></html>
