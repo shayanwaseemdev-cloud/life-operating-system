@@ -1226,8 +1226,9 @@ function loadData() {
 
 function saveData() {
   try {
+    S._savedAt = Date.now(); // always timestamp so we know what's newest
     localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
-    // Cloud sync - debounced
+    // Cloud sync - debounced 1.5s
     clearTimeout(window._cloudSaveTimer);
     window._cloudSaveTimer = setTimeout(cloudSave, 1500);
   } catch(e) { showToast('Storage full — export backup now!'); }
@@ -2448,45 +2449,57 @@ async function cloudSave() {
 // ── CLOUD LOAD ──────────────────────────────────────────────
 async function cloudLoad() {
   if (!fbUser || !fbDb) return;
-  showSyncStatus('↓ Loading...', '#8a99aa');
+  showSyncStatus('↓ Loading your data...', '#8a99aa');
   try {
     const snap = await fbDb.collection('lifeOS').doc(fbUser.uid).get();
     if (snap.exists) {
       const cloudData = snap.data();
       const cloudTime = cloudData._savedAt || 0;
-      // Compare with local
-      let localData = {};
-      try { localData = JSON.parse(localStorage.getItem('shayan_life_os_v2') || '{}'); } catch(e) {}
-      const localTime = localData._savedAt || 0;
+      const localTime = S._savedAt || 0;
 
-      if (cloudTime >= localTime) {
-        // Cloud is newer — use it
-        delete cloudData._savedAt;
-        delete cloudData._savedBy;
-        // Merge into S carefully
+      console.log('Cloud time:', cloudTime, '| Local time:', localTime);
+
+      if (cloudTime > localTime) {
+        // Cloud has newer data — load it
+        console.log('Loading from cloud...');
+        const reserved = ['_savedAt','_savedBy'];
+        reserved.forEach(k => delete cloudData[k]);
+        // Replace S entirely with cloud data
+        Object.keys(S).forEach(k => { if (!cloudData.hasOwnProperty(k)) delete S[k]; });
         Object.keys(cloudData).forEach(k => { S[k] = cloudData[k]; });
-        localStorage.setItem('shayan_life_os_v2', JSON.stringify(S));
-        // Re-render current page
+        S._savedAt = cloudTime;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+        // Re-render everything
         try {
           renderYearSelect();
           updateSidebar();
           const activePage = document.querySelector('.page.active');
           if (activePage) renderPage(activePage.id.replace('p-',''));
-          else renderDashboard();
-        } catch(e) { console.warn('Re-render after load:', e); }
-        showSyncStatus('✓ Loaded from cloud', '#00e676');
+          renderDashboard();
+        } catch(e) { console.warn('Re-render error:', e); }
+        showSyncStatus('✓ Data loaded from cloud', '#00e676');
+      } else if (localTime > cloudTime) {
+        // Local is newer — push up to cloud
+        console.log('Local is newer — pushing to cloud...');
+        showSyncStatus('↑ Syncing to cloud...', '#8a99aa');
+        await cloudSave();
       } else {
-        // Local is newer — push to cloud
-        showSyncStatus('↑ Pushing local data...', '#8a99aa');
-        cloudSave();
+        // Same — already in sync
+        showSyncStatus('✓ Already in sync', '#00e676');
       }
     } else {
-      // No cloud data yet — push local data up
-      cloudSave();
+      // No cloud data yet — this is first time, push local data up
+      console.log('No cloud data — first sync, pushing local data up');
+      showSyncStatus('↑ First sync — uploading data...', '#8a99aa');
+      await cloudSave();
     }
   } catch(e) {
-    console.error('Cloud load failed:', e);
-    showSyncStatus('⚠ Offline mode', '#ffb300');
+    console.error('Cloud load failed:', e.code, e.message);
+    if (e.code === 'permission-denied') {
+      showSyncStatus('✗ Permission denied — check Firestore rules', '#ff5252');
+    } else {
+      showSyncStatus('⚠ Offline — using local data', '#ffb300');
+    }
   }
 }
 
