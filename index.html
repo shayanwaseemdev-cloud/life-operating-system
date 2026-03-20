@@ -1493,7 +1493,7 @@ function renderHabits() {
       const on = yd.habitChecks && yd.habitChecks[key];
       cells += `<td><div class="hcell ${on?'on':''}" onclick="toggleHabit('${key}',this)">${on?'✓':''}</div></td>`;
     }
-    cells += `<td><button class="ibtn ibtn-del" onclick="delHabit(${h.id})" style="margin-left:3px;">✕</button></td>`;
+    cells += `<td><button class="ibtn ibtn-del" onclick="delHabit('${h.id}')" style="margin-left:3px;">✕</button></td>`;
     tr.innerHTML = cells; t.appendChild(tr);
   });
   // 365 chain
@@ -1517,7 +1517,7 @@ function toggleHabit(key, el) {
   saveData();
 }
 
-function delHabit(id) { S.habits = (S.habits||[]).filter(h=>h.id!==id); saveData(); renderHabits(); }
+function delHabit(id) { S.habits = (S.habits||[]).filter(h=>String(h.id)!==String(id)); saveData(); renderHabits(); }
 
 // ============================================================
 // JOURNAL
@@ -1533,13 +1533,13 @@ function renderJournalQuestions() {
   el.innerHTML = '';
   (S.journalQuestions||[]).forEach(q => {
     const d = document.createElement('div'); d.style.marginBottom = '10px';
-    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><div class="f-label" style="margin-bottom:0;">${q.text}</div><div style="display:flex;gap:3px;"><button class="ibtn ibtn-edit" onclick="editJQ(${q.id})">✎</button><button class="ibtn ibtn-del" onclick="delJQ(${q.id})">✕</button></div></div><textarea class="f-textarea" id="jq-${q.id}" style="min-height:50px;margin-bottom:0;" placeholder="Write honestly..."></textarea>`;
+    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><div class="f-label" style="margin-bottom:0;">${q.text}</div><div style="display:flex;gap:3px;"><button class="ibtn ibtn-edit" onclick="editJQ('${q.id}')">✎</button><button class="ibtn ibtn-del" onclick="delJQ('${q.id}')">✕</button></div></div><textarea class="f-textarea" id="jq-${q.id}" style="min-height:50px;margin-bottom:0;" placeholder="Write honestly..."></textarea>`;
     el.appendChild(d);
   });
 }
 
-function delJQ(id) { S.journalQuestions = (S.journalQuestions||[]).filter(x=>x.id!==id); saveData(); renderJournalQuestions(); }
-function editJQ(id) { const q = (S.journalQuestions||[]).find(x=>x.id===id); if(!q) return; openModalWith('edit-jq',{id,text:q.text}); }
+function delJQ(id) { S.journalQuestions = (S.journalQuestions||[]).filter(x=>String(x.id)!==String(id)); saveData(); renderJournalQuestions(); }
+function editJQ(id) { const q = (S.journalQuestions||[]).find(x=>String(x.id)===String(id)); if(!q) return; openModalWith('edit-jq',{id,text:q.text}); }
 
 function saveJournal() {
   const answers = {};
@@ -1610,7 +1610,7 @@ function toggleGoal(cat, id, el) {
   if(g){g.done=!g.done;el.classList.toggle('on',g.done);const t=el.parentElement.querySelector('.itxt');if(t)t.classList.toggle('done',g.done);}
   saveData();
 }
-function delGoal(cat, id) { const yd=YD(); yd.goals[cat]=(yd.goals[cat]||[]).filter(x=>x.id!==id); saveData(); renderGoals(); }
+function delGoal(cat, id) { const yd=YD(); yd.goals[cat]=(yd.goals[cat]||[]).filter(x=>String(x.id)!==String(id)); saveData(); renderGoals(); }
 function editGoal(cat,id) { const yd=YD(); const g=(yd.goals[cat]||[]).find(x=>x.id===id); if(!g)return; openModalWith('edit-goal',{cat,id,name:g.name,deadline:g.deadline||'',status:g.status||'active'}); }
 
 // ============================================================
@@ -1635,7 +1635,7 @@ function renderQuarters() {
 }
 
 function toggleQTask(q,id,el){const yd=YD();const t=(yd.quarterTasks[q]||[]).find(x=>x.id===id);if(t){t.done=!t.done;el.classList.toggle('on',t.done);const tx=el.parentElement.querySelector('.itxt');if(tx)tx.classList.toggle('done',t.done);}saveData();}
-function delQTask(q,id){const yd=YD();yd.quarterTasks[q]=(yd.quarterTasks[q]||[]).filter(x=>x.id!==id);saveData();renderQuarters();}
+function delQTask(q,id){const yd=YD();yd.quarterTasks[q]=(yd.quarterTasks[q]||[]).filter(x=>String(x.id)!==String(id));saveData();renderQuarters();}
 
 // ============================================================
 // MONTHLY REVIEWS
@@ -1945,13 +1945,13 @@ function delLetter(i){(S.letters||[]).splice(i,1);saveData();renderLetters();}
 // DAILY OS
 // ============================================================
 function renderDailyOS(){
-  const tbl=document.getElementById('timeblocks-list');if(tbl){tbl.innerHTML='';(S.timeblocks||[]).forEach(b=>{const d=document.createElement('div');d.className='phase-block';d.style.cssText=`border-color:${colorVar(b.color)};background:${colorBg(b.color)};margin-bottom:8px;`;d.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;"><div><div style="font-size:10px;color:var(--text3);font-family:var(--fb);margin-bottom:1px;">${b.time}</div><div class="phase-title" style="color:${colorVar(b.color)};">${b.title}</div><div class="phase-body">${b.body}</div></div><div style="display:flex;gap:3px;flex-shrink:0;"><button class="ibtn ibtn-edit" onclick="editTimeblock(${b.id})">✎</button><button class="ibtn ibtn-del" onclick="delTimeblock(${b.id})">✕</button></div></div>`;tbl.appendChild(d);});}
+  const tbl=document.getElementById('timeblocks-list');if(tbl){tbl.innerHTML='';(S.timeblocks||[]).forEach(b=>{const d=document.createElement('div');d.className='phase-block';d.style.cssText=`border-color:${colorVar(b.color)};background:${colorBg(b.color)};margin-bottom:8px;`;d.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;"><div><div style="font-size:10px;color:var(--text3);font-family:var(--fb);margin-bottom:1px;">${b.time}</div><div class="phase-title" style="color:${colorVar(b.color)};">${b.title}</div><div class="phase-body">${b.body}</div></div><div style="display:flex;gap:3px;flex-shrink:0;"><button class="ibtn ibtn-edit" onclick="editTimeblock('${b.id}')">✎</button><button class="ibtn ibtn-del" onclick="delTimeblock('${b.id}')">✕</button></div></div>`;tbl.appendChild(d);});}
   const pr=document.getElementById('phone-rules');if(pr){pr.innerHTML='';(S.phoneRules||[]).forEach(r=>{const row=makeItemRow(r.text,null,null,null,()=>{S.phoneRules=S.phoneRules.filter(x=>x.id!==r.id);saveData();renderDailyOS();});pr.appendChild(row);});}
-  const ws=document.getElementById('weekly-struct');if(ws){ws.innerHTML='';(S.weeklyStruct||[]).forEach(w=>{const d=document.createElement('div');d.className='phase-block';d.style.cssText='border-color:var(--b);background:var(--b2);margin-bottom:6px;';d.innerHTML=`<div style="display:flex;justify-content:space-between;"><div><div class="phase-title" style="color:var(--b);font-size:12px;">${w.day}</div><div class="phase-body">${w.body}</div></div><div style="display:flex;gap:3px;"><button class="ibtn ibtn-del" onclick="delWeeklyStruct(${w.id})">✕</button></div></div>`;ws.appendChild(d);});}
+  const ws=document.getElementById('weekly-struct');if(ws){ws.innerHTML='';(S.weeklyStruct||[]).forEach(w=>{const d=document.createElement('div');d.className='phase-block';d.style.cssText='border-color:var(--b);background:var(--b2);margin-bottom:6px;';d.innerHTML=`<div style="display:flex;justify-content:space-between;"><div><div class="phase-title" style="color:var(--b);font-size:12px;">${w.day}</div><div class="phase-body">${w.body}</div></div><div style="display:flex;gap:3px;"><button class="ibtn ibtn-del" onclick="delWeeklyStruct('${w.id}')">✕</button></div></div>`;ws.appendChild(d);});}
 }
-function delTimeblock(id){S.timeblocks=S.timeblocks.filter(x=>x.id!==id);saveData();renderDailyOS();}
-function editTimeblock(id){const b=S.timeblocks.find(x=>x.id===id);if(!b)return;openModalWith('edit-timeblock',b);}
-function delWeeklyStruct(id){S.weeklyStruct=S.weeklyStruct.filter(x=>x.id!==id);saveData();renderDailyOS();}
+function delTimeblock(id){S.timeblocks=S.timeblocks.filter(x=>String(x.id)!==String(id));saveData();renderDailyOS();}
+function editTimeblock(id){const b=S.timeblocks.find(x=>String(x.id)===String(id));if(!b)return;openModalWith('edit-timeblock',b);}
+function delWeeklyStruct(id){S.weeklyStruct=S.weeklyStruct.filter(x=>String(x.id)!==String(id));saveData();renderDailyOS();}
 
 // ============================================================
 // DUAS
@@ -1977,7 +1977,7 @@ function renderNotes(filter){
   if(!filtered.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);padding:10px 0;font-family:var(--fb);">No notes yet.</div>';return;}
   filtered.forEach((n,i)=>{const d=document.createElement('div');d.className='note-card';d.innerHTML=`<div class="note-date">${n.date} · <span class="tag tgray" style="font-size:9px;">${cats[n.cat]||n.cat}</span></div><div class="note-text">${n.text}</div><button class="ibtn ibtn-del" style="position:absolute;top:8px;right:8px;" onclick="delNote('${n.id}')">✕</button>`;el.appendChild(d);});
 }
-function delNote(id){S.notes=(S.notes||[]).filter(n=>n.id!==id);saveData();renderNotes();}
+function delNote(id){S.notes=(S.notes||[]).filter(n=>String(n.id)!==String(id));saveData();renderNotes();}
 
 // ============================================================
 // RESOURCES
