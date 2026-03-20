@@ -403,10 +403,38 @@ button,.btn,.ichk,.hcell,.juz-box,.chain-dot,.iman-btn,.score-btn,.sb-item,.mnav
 
 </style>
 
-<!-- Firebase SDK (compat - no modules needed) -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<!-- Firebase SDK - multiple CDN fallbacks -->
+<script>
+(function() {
+  // Try loading Firebase from multiple CDNs
+  var cdns = [
+    'https://www.gstatic.com/firebasejs/9.23.0/',
+    'https://cdn.jsdelivr.net/npm/firebase@9.23.0/firebase-',
+  ];
+  var loaded = 0;
+  var needed = ['firebase-app-compat.js','firebase-auth-compat.js','firebase-firestore-compat.js'];
+  
+  function loadScript(src, cb) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = cb;
+    s.onerror = function() { console.warn('Failed to load:', src); cb(); };
+    document.head.appendChild(s);
+  }
+
+  // Load sequentially from gstatic (most reliable)
+  function loadNext(i) {
+    if (i >= needed.length) {
+      window._firebaseSDKLoaded = true;
+      return;
+    }
+    loadScript('https://www.gstatic.com/firebasejs/9.23.0/' + needed[i], function() {
+      loadNext(i + 1);
+    });
+  }
+  loadNext(0);
+})();
+</script>
 </head>
 <body>
 <div id="toast"></div>
@@ -2250,7 +2278,16 @@ function initFirebase() {
 }
 
 async function doGoogleLogin() {
-  if (!fbAuth) { showLoginError('Firebase not loaded.'); return; }
+  if (typeof firebase === 'undefined') { 
+    showLoginError('Loading Firebase... please wait 5 seconds and try again.');
+    setTimeout(initCloudSync, 0);
+    return; 
+  }
+  if (!fbAuth) { 
+    showLoginError('Firebase initializing... please try again in 3 seconds.');
+    setTimeout(initFirebase, 100);
+    return; 
+  }
   const btn = document.getElementById('googleBtn');
   if(btn){ btn.textContent = 'Opening Google...'; btn.disabled = true; }
   try {
@@ -2480,12 +2517,23 @@ function signOut() {
 // ── INIT ─────────────────────────────────────────────────────
 // Called after main app init() completes
 function initCloudSync() {
-  if (typeof firebase !== 'undefined') {
-    initFirebase();
-  } else {
-    console.warn('Firebase SDK not loaded');
-    hideLoginOverlay();
+  var maxWait = 80; // wait up to 8 seconds
+  var attempts = 0;
+  function tryInit() {
+    attempts++;
+    if (typeof firebase !== 'undefined' && firebase.app) {
+      console.log('Firebase SDK loaded after', attempts * 100, 'ms');
+      initFirebase();
+    } else if (attempts < maxWait) {
+      setTimeout(tryInit, 100);
+    } else {
+      console.warn('Firebase SDK never loaded after 8s');
+      // Show app anyway — works offline with localStorage
+      hideLoginOverlay();
+      showLoginError('Cloud sync unavailable. App works offline only.');
+    }
   }
+  tryInit();
 }
 
 </script>
