@@ -2252,63 +2252,88 @@ function hideLoginOverlay() {
 }
 
 async function doLogin() {
-  const email    = document.getElementById('loginEmail')?.value?.trim();
-  const password = document.getElementById('loginPassword')?.value;
-  const errEl    = document.getElementById('loginError');
+  const email    = (document.getElementById('loginEmail')?.value||'').trim();
+  const password = document.getElementById('loginPassword')?.value||'';
   const btn      = document.getElementById('loginBtn');
 
-  if (!email || !password) {
-    showLoginError('Please enter your email and password.');
-    return;
-  }
-  if (password.length < 6) {
-    showLoginError('Password must be at least 6 characters.');
-    return;
-  }
+  if (!email || !password) { showLoginError('Enter your email and password.'); return; }
+  if (password.length < 6) { showLoginError('Password must be at least 6 characters.'); return; }
+  if (!fbAuth) { showLoginError('Firebase not loaded. Check internet connection.'); return; }
 
-  btn.textContent = 'Signing in...';
+  btn.textContent = 'Please wait...';
   btn.style.opacity = '0.7';
   btn.disabled = true;
 
+  const finish = () => { btn.textContent = 'Sign In / Create Account'; btn.style.opacity='1'; btn.disabled=false; };
+
+  // Step 1: Try signing in
   try {
-    // Try sign in first
     const cred = await fbAuth.signInWithEmailAndPassword(email, password);
     fbUser = cred.user;
+    finish();
     hideLoginOverlay();
     cloudLoad();
-  } catch(signInErr) {
-    if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/invalid-credential' || signInErr.code === 'auth/invalid-email') {
-      // Try creating account
-      try {
-        const cred = await fbAuth.createUserWithEmailAndPassword(email, password);
-        fbUser = cred.user;
-        hideLoginOverlay();
-        showSyncStatus('✓ Account created!', '#00e676');
-        cloudSave();
-      } catch(createErr) {
-        showLoginError(friendlyAuthError(createErr.code));
-      }
-    } else if (signInErr.code === 'auth/wrong-password') {
+    return;
+  } catch(e1) {
+    console.log('Sign-in attempt:', e1.code, e1.message);
+    // If wrong password specifically, don't try to create
+    if (e1.code === 'auth/wrong-password') {
+      finish();
       showLoginError('Wrong password. Try again.');
-    } else {
-      showLoginError(friendlyAuthError(signInErr.code));
+      return;
+    }
+    // For network errors, stop here
+    if (e1.code === 'auth/network-request-failed') {
+      finish();
+      showLoginError('No internet connection. Check your connection.');
+      return;
+    }
+    if (e1.code === 'auth/too-many-requests') {
+      finish();
+      showLoginError('Too many attempts. Wait a few minutes.');
+      return;
     }
   }
 
-  btn.textContent = 'Sign In / Create Account';
-  btn.style.opacity = '1';
-  btn.disabled = false;
+  // Step 2: Sign-in failed — try creating account
+  try {
+    const cred = await fbAuth.createUserWithEmailAndPassword(email, password);
+    fbUser = cred.user;
+    finish();
+    hideLoginOverlay();
+    showSyncStatus('✓ Account created!', '#00e676');
+    cloudSave();
+    return;
+  } catch(e2) {
+    console.log('Create attempt:', e2.code, e2.message);
+    finish();
+    if (e2.code === 'auth/email-already-in-use') {
+      showLoginError('Wrong password. Try again.');
+    } else if (e2.code === 'auth/operation-not-allowed') {
+      showLoginError('⚠ Email sign-in not enabled in Firebase. Go to Firebase Console → Authentication → Sign-in method → Email/Password → Enable.');
+    } else if (e2.code === 'auth/admin-restricted-operation') {
+      showLoginError('⚠ Email sign-in not enabled. Enable Email/Password in Firebase Console → Authentication.');
+    } else {
+      showLoginError('Error: ' + e2.code + ' — ' + e2.message);
+    }
+  }
 }
 
 function friendlyAuthError(code) {
   const msgs = {
-    'auth/too-many-requests': 'Too many attempts. Try again in a few minutes.',
-    'auth/network-request-failed': 'No internet connection. Working offline.',
-    'auth/invalid-email': 'Please enter a valid email address.',
-    'auth/email-already-in-use': 'Account exists. Check your password.',
-    'auth/weak-password': 'Password too weak. Use at least 6 characters.',
+    'auth/too-many-requests':       'Too many attempts. Wait a few minutes and try again.',
+    'auth/network-request-failed':  'No internet. Check your connection and try again.',
+    'auth/invalid-email':           'Invalid email address. Check and try again.',
+    'auth/email-already-in-use':    'Account exists — wrong password. Try again.',
+    'auth/weak-password':           'Password too short. Use at least 6 characters.',
+    'auth/invalid-credential':      'Wrong email or password. Try again.',
+    'auth/wrong-password':          'Wrong password. Try again.',
+    'auth/user-not-found':          'No account found. Check email or create new account.',
+    'auth/internal-error':          'Firebase error. Check internet and try again.',
+    'auth/operation-not-allowed':   'Email sign-in not enabled. Enable it in Firebase console → Authentication.',
+    'auth/configuration-not-found': 'Firebase not configured. Check Firebase console settings.',
   };
-  return msgs[code] || 'Something went wrong. Try again.';
+  return msgs[code] || ('Error: ' + code);
 }
 
 function showLoginError(msg) {
