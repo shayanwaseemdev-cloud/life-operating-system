@@ -402,9 +402,45 @@ button,.btn,.ichk,.hcell,.juz-box,.chain-dot,.iman-btn,.score-btn,.sb-item,.mnav
 }
 
 </style>
+
+<!-- Firebase SDK (compat - no modules needed) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 <div id="toast"></div>
+
+<!-- Sync status indicator -->
+<div id="sync-status" style="position:fixed;top:10px;right:12px;z-index:600;font-size:11px;font-family:Inter,sans-serif;padding:5px 12px;border-radius:20px;background:rgba(13,17,24,0.95);border:1px solid rgba(255,255,255,0.1);color:#8a99aa;display:none;transition:opacity .3s;pointer-events:none;"></div>
+
+<!-- Login Overlay -->
+<div id="loginOverlay" style="position:fixed;inset:0;z-index:9999;background:#070a0d;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+  <div style="width:340px;max-width:90vw;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:36px;margin-bottom:8px;">⚡</div>
+      <div style="font-family:Poppins,sans-serif;font-weight:800;font-size:22px;color:#00e676;letter-spacing:-0.01em;">SHAYAN · LIFE OS</div>
+      <div style="font-size:12px;color:#435060;margin-top:6px;font-family:Inter,sans-serif;">Sign in to sync your data across all devices</div>
+    </div>
+    <div id="loginError" style="background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.3);border-radius:8px;padding:10px 14px;font-size:12px;color:#ff5252;margin-bottom:14px;display:none;font-family:Inter,sans-serif;"></div>
+    <input id="loginEmail" type="email" placeholder="Your Gmail address" autocomplete="email"
+      style="width:100%;background:#131920;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 14px;color:#e6ecf2;font-size:14px;font-family:Inter,sans-serif;outline:none;margin-bottom:10px;box-sizing:border-box;"
+      onfocus="this.style.borderColor='#00e676'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+    <input id="loginPassword" type="password" placeholder="Password (min 6 characters)" autocomplete="current-password"
+      style="width:100%;background:#131920;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:12px 14px;color:#e6ecf2;font-size:14px;font-family:Inter,sans-serif;outline:none;margin-bottom:16px;box-sizing:border-box;"
+      onfocus="this.style.borderColor='#00e676'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()" id="loginBtn"
+      style="width:100%;background:#00e676;color:#000;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:700;font-family:Poppins,sans-serif;cursor:pointer;margin-bottom:10px;transition:background .15s;">
+      Sign In / Create Account
+    </button>
+    <div style="font-size:11px;color:#435060;text-align:center;font-family:Inter,sans-serif;line-height:1.6;">
+      First time? Enter any password (6+ chars) to create your account.<br>
+      Your data syncs instantly across all devices.
+    </div>
+  </div>
+</div>
+
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Menu">
@@ -429,8 +465,7 @@ button,.btn,.ichk,.hcell,.juz-box,.chain-dot,.iman-btn,.score-btn,.sb-item,.mnav
     </div>
   </div>
 </nav>
-<!-- Cloud sync status -->
-<div id="sync-status" style="position:fixed;bottom:70px;right:12px;z-index:500;font-size:10px;font-family:Inter,sans-serif;padding:4px 10px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);color:var(--text3);display:none;transition:opacity .3s;">⚡ Syncing...</div>
+
 
 <div class="shell">
 
@@ -649,12 +684,12 @@ button,.btn,.ichk,.hcell,.juz-box,.chain-dot,.iman-btn,.score-btn,.sb-item,.mnav
   </div>
   <div class="g3">
     <div class="card"><div class="card-h"><span style="color:var(--g)">🕌 Deen</span></div><div id="goals-deen"></div></div>
-    <div class="card"><div class="card-h"><span style="color:var(--g)">💪 Body</span></div><div id="goals-body"></div></div>
-    <div class="card"><div class="card-h"><span style="color:var(--g)">💰 Wealth</span></div><div id="goals-wealth"></div></div>
+    <div class="card"><div class="card-h"><span style="color:var(--b)">💪 Body</span></div><div id="goals-body"></div></div>
+    <div class="card"><div class="card-h"><span style="color:var(--a)">💰 Wealth</span></div><div id="goals-wealth"></div></div>
   </div>
   <div class="g2" style="margin-top:13px;">
-    <div class="card"><div class="card-h"><span style="color:var(--g)">📚 Knowledge</span></div><div id="goals-knowledge"></div></div>
-    <div class="card"><div class="card-h"><span style="color:var(--g)">🌟 Life / Personal</span></div><div id="goals-life"></div></div>
+    <div class="card"><div class="card-h"><span style="color:var(--p)">📚 Knowledge</span></div><div id="goals-knowledge"></div></div>
+    <div class="card"><div class="card-h"><span style="color:var(--pink)">🌟 Life / Personal</span></div><div id="goals-life"></div></div>
   </div>
 </div>
 
@@ -1155,11 +1190,9 @@ function loadData() {
 function saveData() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
-    // Also save to Firebase cloud (debounced 1.5s)
+    // Cloud sync - debounced
     clearTimeout(window._cloudSaveTimer);
-    window._cloudSaveTimer = setTimeout(() => {
-      if (window.saveToCloud) window.saveToCloud();
-    }, 1500);
+    window._cloudSaveTimer = setTimeout(cloudSave, 1500);
   } catch(e) { showToast('Storage full — export backup now!'); }
 }
 
@@ -1294,9 +1327,12 @@ function makeItemRow(text, tag, tagColor, onEdit, onDel, checkable=true) {
   let inner = checkable ? `<div class="ichk" onclick="chk(this)"></div>` : '';
   inner += `<div class="itxt">${text}</div>`;
   if (tag) inner += `<span class="tag ${tagClass(tagColor)}" style="flex-shrink:0;">${tag}</span>`;
-  if (onEdit) inner += `<button class="ibtn ibtn-edit" onclick="(${onEdit})()" title="Edit">✎</button>`;
-  if (onDel) inner += `<button class="ibtn ibtn-del" onclick="(${onDel})()" title="Delete">✕</button>`;
-  d.innerHTML = inner; return d;
+  if (onEdit) inner += `<button class="ibtn ibtn-edit mkr-edit" title="Edit">✎</button>`;
+  if (onDel)  inner += `<button class="ibtn ibtn-del mkr-del" title="Delete">✕</button>`;
+  d.innerHTML = inner;
+  if (onEdit) { const b = d.querySelector('.mkr-edit'); if(b) b.addEventListener('click', onEdit); }
+  if (onDel)  { const b = d.querySelector('.mkr-del');  if(b) b.addEventListener('click', onDel); }
+  return d;
 }
 
 function showToast(msg) {
@@ -1732,8 +1768,8 @@ function delIncome(i){const yd=YD();(yd.incomeEntries||[]).splice(i,1);saveData(
 // ============================================================
 function renderDeen(){
   const lbl=document.getElementById('quran-year-lbl');if(lbl)lbl.textContent=`· ${currentYear}`;
-  const dd=document.getElementById('deen-daily');if(dd){dd.innerHTML='';(S.deenDaily||[]).forEach(x=>{const r=makeItemRow(x.text,null,null,()=>openModalWith('edit-deen-item',{id:x.id,text:x.text,type:'daily'}),()=>{S.deenDaily=S.deenDaily.filter(i=>i.id!==x.id);saveData();renderDeen();});dd.appendChild(r);});}
-  const dp=document.getElementById('deen-periodic');if(dp){dp.innerHTML='';(S.deenPeriodic||[]).forEach(x=>{const r=makeItemRow(x.text,x.freq,'gray',()=>openModalWith('edit-deen-item',{id:x.id,text:x.text,freq:x.freq,type:'periodic'}),()=>{S.deenPeriodic=S.deenPeriodic.filter(i=>i.id!==x.id);saveData();renderDeen();});dp.appendChild(r);});}
+  const dd=document.getElementById('deen-daily');if(dd){dd.innerHTML='';(S.deenDaily||[]).forEach(x=>{const r=makeItemRow(x.text,null,null,()=>openModalWith('edit-deen-item',{id:x.id,text:x.text,type:'daily'}),()=>{S.deenDaily=S.deenDaily.filter(i=>String(i.id)!==String(x.id));saveData();renderDeen();});dd.appendChild(r);});}
+  const dp=document.getElementById('deen-periodic');if(dp){dp.innerHTML='';(S.deenPeriodic||[]).forEach(x=>{const r=makeItemRow(x.text,x.freq,'gray',()=>openModalWith('edit-deen-item',{id:x.id,text:x.text,freq:x.freq,type:'periodic'}),()=>{S.deenPeriodic=S.deenPeriodic.filter(i=>String(i.id)!==String(x.id));saveData();renderDeen();});dp.appendChild(r);});}
   renderQuranTracker();
 }
 
@@ -1752,16 +1788,16 @@ function renderQuranTracker(){
 // BODY
 // ============================================================
 function renderBody(){
-  const ti=document.getElementById('training-items');if(ti){ti.innerHTML='';(S.trainingItems||[]).forEach(x=>{const r=makeItemRow(x.text,x.phase,'blue',()=>openModalWith('edit-training',{id:x.id,text:x.text,phase:x.phase}),()=>{S.trainingItems=S.trainingItems.filter(i=>i.id!==x.id);saveData();renderBody();});ti.appendChild(r);});}
+  const ti=document.getElementById('training-items');if(ti){ti.innerHTML='';(S.trainingItems||[]).forEach(x=>{const r=makeItemRow(x.text,x.phase,'blue',()=>openModalWith('edit-training',{id:x.id,text:x.text,phase:x.phase}),()=>{S.trainingItems=S.trainingItems.filter(i=>String(i.id)!==String(x.id));saveData();renderBody();});ti.appendChild(r);});}
   const sp=document.getElementById('strength-prs');if(sp){sp.innerHTML='';(S.strengthPRs||[]).forEach((m,i)=>{const d=document.createElement('div');d.style.cssText='padding:6px 0;border-bottom:1px solid var(--border);';d.innerHTML=`<div class="prog-hdr"><span class="prog-name">${m.name}</span><span class="prog-val" style="color:var(--b)">${m.current} → ${m.target}</span></div><div class="prog-track"><div class="prog-fill" style="width:5%;background:var(--b)"></div></div>`;sp.appendChild(d);});}
-  const ni=document.getElementById('nutrition-items');if(ni){ni.innerHTML='';(S.nutritionItems||[]).forEach(x=>{const r=makeItemRow(x.text,null,null,null,()=>{S.nutritionItems=S.nutritionItems.filter(i=>i.id!==x.id);saveData();renderBody();});ni.appendChild(r);});}
+  const ni=document.getElementById('nutrition-items');if(ni){ni.innerHTML='';(S.nutritionItems||[]).forEach(x=>{const r=makeItemRow(x.text,null,null,null,()=>{S.nutritionItems=S.nutritionItems.filter(i=>String(i.id)!==String(x.id));saveData();renderBody();});ni.appendChild(r);});}
 }
 
 // ============================================================
 // WEALTH
 // ============================================================
 function renderWealth(){
-  const wh=document.getElementById('wealth-habits');if(wh){wh.innerHTML='';(S.wealthHabits||[]).forEach(x=>{const r=makeItemRow(x.text,x.freq,'amber',()=>openModalWith('edit-wealth',{id:x.id,text:x.text,freq:x.freq}),()=>{S.wealthHabits=S.wealthHabits.filter(i=>i.id!==x.id);saveData();renderWealth();});wh.appendChild(r);});}
+  const wh=document.getElementById('wealth-habits');if(wh){wh.innerHTML='';(S.wealthHabits||[]).forEach(x=>{const r=makeItemRow(x.text,x.freq,'amber',()=>openModalWith('edit-wealth',{id:x.id,text:x.text,freq:x.freq}),()=>{S.wealthHabits=S.wealthHabits.filter(i=>String(i.id)!==String(x.id));saveData();renderWealth();});wh.appendChild(r);});}
   const ss=document.getElementById('skill-stack');if(ss){ss.innerHTML='';(S.skillStack||[]).forEach((sk,i)=>{const d=document.createElement('div');d.className='item-row';d.innerHTML=`<div class="itxt" style="flex:1;">${sk.name}</div><span class="tag ${sk.status==='Mastered'?'tg':sk.status==='Learning'?'tb':'tgray'}">${sk.status}</span><button class="ibtn ibtn-del" onclick="delSkill(${i})">✕</button>`;ss.appendChild(d);});}
   const bl=document.getElementById('book-list');if(bl){bl.innerHTML='';(S.books||[]).forEach((b,i)=>{const d=document.createElement('div');d.className='book-card';d.innerHTML=`<div class="book-month">${b.month}</div><div class="book-title" style="${b.read?'text-decoration:line-through;color:var(--text3);':''}">${b.title}</div><div class="book-author">${b.author}</div><div style="margin-top:5px;display:flex;gap:4px;"><button class="btn btn-ghost btn-xs" onclick="toggleBookRead(${i})">${b.read?'✓ Read':'Mark read'}</button><button class="ibtn ibtn-del" onclick="delBook(${i})" style="width:18px;height:18px;">✕</button></div>`;bl.appendChild(d);});}
 }
@@ -1946,7 +1982,7 @@ function delLetter(i){(S.letters||[]).splice(i,1);saveData();renderLetters();}
 // ============================================================
 function renderDailyOS(){
   const tbl=document.getElementById('timeblocks-list');if(tbl){tbl.innerHTML='';(S.timeblocks||[]).forEach(b=>{const d=document.createElement('div');d.className='phase-block';d.style.cssText=`border-color:${colorVar(b.color)};background:${colorBg(b.color)};margin-bottom:8px;`;d.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;"><div><div style="font-size:10px;color:var(--text3);font-family:var(--fb);margin-bottom:1px;">${b.time}</div><div class="phase-title" style="color:${colorVar(b.color)};">${b.title}</div><div class="phase-body">${b.body}</div></div><div style="display:flex;gap:3px;flex-shrink:0;"><button class="ibtn ibtn-edit" onclick="editTimeblock('${b.id}')">✎</button><button class="ibtn ibtn-del" onclick="delTimeblock('${b.id}')">✕</button></div></div>`;tbl.appendChild(d);});}
-  const pr=document.getElementById('phone-rules');if(pr){pr.innerHTML='';(S.phoneRules||[]).forEach(r=>{const row=makeItemRow(r.text,null,null,null,()=>{S.phoneRules=S.phoneRules.filter(x=>x.id!==r.id);saveData();renderDailyOS();});pr.appendChild(row);});}
+  const pr=document.getElementById('phone-rules');if(pr){pr.innerHTML='';(S.phoneRules||[]).forEach(r=>{const row=makeItemRow(r.text,null,null,null,()=>{S.phoneRules=S.phoneRules.filter(x=>String(x.id)!==String(r.id));saveData();renderDailyOS();});pr.appendChild(row);});}
   const ws=document.getElementById('weekly-struct');if(ws){ws.innerHTML='';(S.weeklyStruct||[]).forEach(w=>{const d=document.createElement('div');d.className='phase-block';d.style.cssText='border-color:var(--b);background:var(--b2);margin-bottom:6px;';d.innerHTML=`<div style="display:flex;justify-content:space-between;"><div><div class="phase-title" style="color:var(--b);font-size:12px;">${w.day}</div><div class="phase-body">${w.body}</div></div><div style="display:flex;gap:3px;"><button class="ibtn ibtn-del" onclick="delWeeklyStruct('${w.id}')">✕</button></div></div>`;ws.appendChild(d);});}
 }
 function delTimeblock(id){S.timeblocks=S.timeblocks.filter(x=>String(x.id)!==String(id));saveData();renderDailyOS();}
@@ -2099,6 +2135,7 @@ function init(){
 }
 
 init();
+setTimeout(initCloudSync, 100);
 
 // ======================================================
 // MOBILE NAVIGATION SYSTEM
@@ -2160,12 +2197,14 @@ setTimeout(()=>{
 
 </script>
 
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, doc, setDoc, getDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
-const firebaseConfig = {
+
+
+<script>
+// ================================================================
+// FIREBASE — Clean implementation (compat SDK, no ES modules)
+// ================================================================
+const FB_CONFIG = {
   apiKey: "AIzaSyBA8j2uPBXF_RRLNaDZ3NZKZjeh6U06lWs",
   authDomain: "shayan-life-os.firebaseapp.com",
   projectId: "shayan-life-os",
@@ -2174,104 +2213,224 @@ const firebaseConfig = {
   appId: "1:147340773024:web:09c720793ddb726cf5abc5"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+let fbApp, fbDb, fbAuth, fbUser = null;
+let cloudSaveInProgress = false;
+let pendingSave = false;
 
-let fbUserId = null;
-let saveTimeout = null;
-let isOnline = navigator.onLine;
+function initFirebase() {
+  try {
+    fbApp  = firebase.initializeApp(FB_CONFIG);
+    fbDb   = firebase.firestore();
+    fbAuth = firebase.auth();
+    // Persist auth across sessions — user stays logged in on same device
+    fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    // Listen for auth state — if already logged in, skip login screen
+    fbAuth.onAuthStateChanged(user => {
+      if (user) {
+        fbUser = user;
+        hideLoginOverlay();
+        cloudLoad();
+      } else {
+        fbUser = null;
+        showLoginOverlay();
+      }
+    });
+  } catch(e) {
+    console.error('Firebase init failed:', e);
+    hideLoginOverlay(); // Still let app work offline
+  }
+}
 
-// Fixed user ID for Shayan - single user system
-const SHAYAN_DOC_ID = 'shayan_main';
+function showLoginOverlay() {
+  const el = document.getElementById('loginOverlay');
+  if (el) el.style.display = 'flex';
+}
 
+function hideLoginOverlay() {
+  const el = document.getElementById('loginOverlay');
+  if (el) el.style.display = 'none';
+}
+
+async function doLogin() {
+  const email    = document.getElementById('loginEmail')?.value?.trim();
+  const password = document.getElementById('loginPassword')?.value;
+  const errEl    = document.getElementById('loginError');
+  const btn      = document.getElementById('loginBtn');
+
+  if (!email || !password) {
+    showLoginError('Please enter your email and password.');
+    return;
+  }
+  if (password.length < 6) {
+    showLoginError('Password must be at least 6 characters.');
+    return;
+  }
+
+  btn.textContent = 'Signing in...';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+
+  try {
+    // Try sign in first
+    const cred = await fbAuth.signInWithEmailAndPassword(email, password);
+    fbUser = cred.user;
+    hideLoginOverlay();
+    cloudLoad();
+  } catch(signInErr) {
+    if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/invalid-credential' || signInErr.code === 'auth/invalid-email') {
+      // Try creating account
+      try {
+        const cred = await fbAuth.createUserWithEmailAndPassword(email, password);
+        fbUser = cred.user;
+        hideLoginOverlay();
+        showSyncStatus('✓ Account created!', '#00e676');
+        cloudSave();
+      } catch(createErr) {
+        showLoginError(friendlyAuthError(createErr.code));
+      }
+    } else if (signInErr.code === 'auth/wrong-password') {
+      showLoginError('Wrong password. Try again.');
+    } else {
+      showLoginError(friendlyAuthError(signInErr.code));
+    }
+  }
+
+  btn.textContent = 'Sign In / Create Account';
+  btn.style.opacity = '1';
+  btn.disabled = false;
+}
+
+function friendlyAuthError(code) {
+  const msgs = {
+    'auth/too-many-requests': 'Too many attempts. Try again in a few minutes.',
+    'auth/network-request-failed': 'No internet connection. Working offline.',
+    'auth/invalid-email': 'Please enter a valid email address.',
+    'auth/email-already-in-use': 'Account exists. Check your password.',
+    'auth/weak-password': 'Password too weak. Use at least 6 characters.',
+  };
+  return msgs[code] || 'Something went wrong. Try again.';
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('loginError');
+  if (el) { el.textContent = msg; el.style.display = 'block'; }
+}
+
+// ── CLOUD SAVE ──────────────────────────────────────────────
+async function cloudSave() {
+  if (!fbUser || !fbDb) {
+    // Not logged in — data is safe in localStorage, will sync when online
+    return;
+  }
+  if (cloudSaveInProgress) {
+    pendingSave = true;
+    return;
+  }
+  cloudSaveInProgress = true;
+  showSyncStatus('↑ Saving...', '#8a99aa');
+  try {
+    const payload = JSON.parse(JSON.stringify(S)); // deep clone
+    payload._savedAt = Date.now();
+    payload._savedBy = fbUser.email;
+    // Split into chunks if large (Firestore 1MB limit per doc)
+    // For safety, store in one doc — 1MB is ~500k characters, plenty
+    await fbDb.collection('lifeOS').doc(fbUser.uid).set(payload);
+    showSyncStatus('✓ Saved to cloud', '#00e676');
+  } catch(e) {
+    console.error('Cloud save failed:', e);
+    if (e.code === 'permission-denied') {
+      showSyncStatus('✗ Permission denied — check Firestore rules', '#ff5252');
+    } else {
+      showSyncStatus('⚠ Offline — saved locally', '#ffb300');
+    }
+  } finally {
+    cloudSaveInProgress = false;
+    if (pendingSave) {
+      pendingSave = false;
+      setTimeout(cloudSave, 500);
+    }
+  }
+}
+
+// ── CLOUD LOAD ──────────────────────────────────────────────
+async function cloudLoad() {
+  if (!fbUser || !fbDb) return;
+  showSyncStatus('↓ Loading...', '#8a99aa');
+  try {
+    const snap = await fbDb.collection('lifeOS').doc(fbUser.uid).get();
+    if (snap.exists) {
+      const cloudData = snap.data();
+      const cloudTime = cloudData._savedAt || 0;
+      // Compare with local
+      let localData = {};
+      try { localData = JSON.parse(localStorage.getItem('shayan_life_os_v2') || '{}'); } catch(e) {}
+      const localTime = localData._savedAt || 0;
+
+      if (cloudTime >= localTime) {
+        // Cloud is newer — use it
+        delete cloudData._savedAt;
+        delete cloudData._savedBy;
+        // Merge into S carefully
+        Object.keys(cloudData).forEach(k => { S[k] = cloudData[k]; });
+        localStorage.setItem('shayan_life_os_v2', JSON.stringify(S));
+        // Re-render current page
+        try {
+          renderYearSelect();
+          updateSidebar();
+          const activePage = document.querySelector('.page.active');
+          if (activePage) renderPage(activePage.id.replace('p-',''));
+          else renderDashboard();
+        } catch(e) { console.warn('Re-render after load:', e); }
+        showSyncStatus('✓ Loaded from cloud', '#00e676');
+      } else {
+        // Local is newer — push to cloud
+        showSyncStatus('↑ Pushing local data...', '#8a99aa');
+        cloudSave();
+      }
+    } else {
+      // No cloud data yet — push local data up
+      cloudSave();
+    }
+  } catch(e) {
+    console.error('Cloud load failed:', e);
+    showSyncStatus('⚠ Offline mode', '#ffb300');
+  }
+}
+
+// ── SYNC STATUS UI ──────────────────────────────────────────
 function showSyncStatus(msg, color) {
   const el = document.getElementById('sync-status');
   if (!el) return;
   el.textContent = msg;
-  el.style.color = color || 'var(--text2)';
+  el.style.color = color || '#8a99aa';
   el.style.display = 'block';
   el.style.opacity = '1';
   clearTimeout(window._syncHideTimer);
   window._syncHideTimer = setTimeout(() => {
     el.style.opacity = '0';
-    setTimeout(() => { el.style.display = 'none'; }, 300);
+    setTimeout(() => { el.style.display = 'none'; }, 400);
   }, 3000);
 }
 
-// Sign in anonymously (silent, no password needed)
-signInAnonymously(auth).then(userCred => {
-  fbUserId = userCred.user.uid;
-  window._fbReady = true;
-  console.log('Firebase ready');
-  // Load cloud data on startup
-  loadFromCloud();
-}).catch(err => {
-  console.warn('Firebase auth failed, using localStorage only:', err);
-  window._fbReady = false;
-});
+// ── ONLINE/OFFLINE ──────────────────────────────────────────
+window.addEventListener('online',  () => { showSyncStatus('✓ Back online', '#00e676'); if(fbUser) cloudSave(); });
+window.addEventListener('offline', () => { showSyncStatus('⚠ Offline — saving locally', '#ffb300'); });
 
-async function loadFromCloud() {
-  try {
-    const docRef = doc(db, 'lifeOS', SHAYAN_DOC_ID);
-    const snap = await getDoc(docRef);
-    if (snap.exists()) {
-      const cloudData = snap.data();
-      const cloudTime = cloudData._savedAt || 0;
-      const localData = JSON.parse(localStorage.getItem('shayan_life_os_v2') || '{}');
-      const localTime = localData._savedAt || 0;
-      // Use whichever is newer
-      if (cloudTime >= localTime) {
-        // Cloud is newer or same
-        delete cloudData._savedAt;
-        window.S = { ...window.S, ...cloudData };
-        localStorage.setItem('shayan_life_os_v2', JSON.stringify(cloudData));
-        if (typeof renderPage === 'function') renderPage(currentActivePage());
-        if (typeof renderDashboard === 'function') renderDashboard();
-        showSyncStatus('✓ Loaded from cloud', 'var(--g)');
-      } else {
-        // Local is newer, push to cloud
-        saveToCloud();
-        showSyncStatus('✓ Local data is current', 'var(--g)');
-      }
-    } else {
-      // No cloud data yet, push local
-      saveToCloud();
-    }
-  } catch (err) {
-    console.warn('Cloud load failed:', err);
-    showSyncStatus('⚠ Offline mode', 'var(--a)');
-  }
+// ── SIGN OUT (accessible from console if needed) ─────────────
+function signOut() {
+  if (fbAuth) fbAuth.signOut().then(() => showLoginOverlay());
 }
 
-async function saveToCloud() {
-  if (!window._fbReady) return;
-  try {
-    const dataToSave = { ...window.S, _savedAt: Date.now() };
-    const docRef = doc(db, 'lifeOS', SHAYAN_DOC_ID);
-    await setDoc(docRef, dataToSave);
-    showSyncStatus('✓ Saved to cloud', 'var(--g)');
-  } catch (err) {
-    console.warn('Cloud save failed:', err);
-    showSyncStatus('⚠ Saved locally only', 'var(--a)');
+// ── INIT ─────────────────────────────────────────────────────
+// Called after main app init() completes
+function initCloudSync() {
+  if (typeof firebase !== 'undefined') {
+    initFirebase();
+  } else {
+    console.warn('Firebase SDK not loaded');
+    hideLoginOverlay();
   }
 }
-
-// Expose to global so saveData() can call it
-window.saveToCloud = saveToCloud;
-window.loadFromCloud = loadFromCloud;
-
-// Network status
-window.addEventListener('online', () => {
-  isOnline = true;
-  saveToCloud();
-  showSyncStatus('✓ Back online — synced', 'var(--g)');
-});
-window.addEventListener('offline', () => {
-  isOnline = false;
-  showSyncStatus('⚠ Offline — saving locally', 'var(--a)');
-});
 
 </script>
-
 </body></html>
